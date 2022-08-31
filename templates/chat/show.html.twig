@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+    <h1>Chat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ chat.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ chat.title }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ chat.createdAt ? chat.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>content</th>
+                <th>user</th>
+                <th>date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for message in chat.messages %}
+            <tr>
+                <td>{{ message.id }}</td>
+                <td>{{ message.content }}</td>
+                <td>{{ message.user }}</td>
+                <td>{{ message.createdAt|date("d/m/Y H:i:s") }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+      <button class="btn btn-success" type="submit">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_chat_index') }}">back to list</a>
+
+    <a href="{{ path('app_chat_edit', {'id': chat.id}) }}">edit</a>
+
+{% endblock %}
